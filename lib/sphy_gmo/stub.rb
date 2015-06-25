@@ -36,11 +36,15 @@ module SphyGmo
       WebMock.disable!
     end
 
-    def stub_entry_tran(result)
+    def stub_entry_tran(success: )
       target_url = "https://#{SphyGmo.configuration.host}/payment/EntryTran.idPass"
-      body = Rack::Utils.build_nested_query(result)
-
-      stub_request(:post, target_url).to_return(status: 200, body: body)
+      if success
+        body = Rack::Utils.build_nested_query(AccessID: rand(0..10000), AccessPass: rand(0..10000))
+      else
+        err = SphyGmo::ErrorInfo.lookuptable.values.sample
+        body = Rack::Utils.build_nested_query(ErrCode: err.code ,ErrInfo: err.info)
+      end
+      WebMock.stub_request(:post, target_url).to_return(status: 200, body: body)
     end
   end
 end
