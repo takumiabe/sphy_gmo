@@ -8,9 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = SphyGmo::VERSION
   spec.authors       = ["Takumi Abe"]
   spec.email         = ["abe@engraphia.com"]
+  spec.license       = 'MIT'
 
   spec.summary       = %q{gmo wrapper}
-  spec.description   = %q{gmo wrapper}
+  spec.description   = %q{easy-testable gmo wrapper}
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
@@ -26,4 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "webmock", "~> 1.21"
   spec.add_development_dependency "bundler", "~> 1.8"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "awesome_print", "~> 1.6"
+  spec.add_development_dependency "pry", "~> 0.10"
 end
