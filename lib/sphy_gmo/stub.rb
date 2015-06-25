@@ -41,7 +41,7 @@ module SphyGmo
       if success
         body = Rack::Utils.build_nested_query(AccessID: rand(0..10000), AccessPass: rand(0..10000))
       else
-        err = SphyGmo::ErrorInfo.lookuptable.values.sample
+        err = SphyGmo::ErrorInfo.all.values.sample
         body = Rack::Utils.build_nested_query(ErrCode: err.code ,ErrInfo: err.info)
       end
       WebMock.stub_request(:post, target_url).to_return(status: 200, body: body)
