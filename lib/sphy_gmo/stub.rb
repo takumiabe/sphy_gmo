@@ -1,6 +1,8 @@
 require 'forwardable'
 require 'webmock'
 
+WebMock.disable! # デフォルトでブロックしてしまうので排除
+
 module SphyGmo::Stub
   class << self
     extend Forwardable
