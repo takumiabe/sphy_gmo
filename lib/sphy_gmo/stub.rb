@@ -1,11 +1,44 @@
+require 'forwardable'
 require 'webmock'
 
-module SphyGmo
+module SphyGmo::Stub
   class << self
-    attr_accessor :stub
+    extend Forwardable
 
-    def stub=(mode)
-      if @stub != mode
+    def modes
+      @modes ||= [:disable]
+    end
+
+    def mode
+      modes[-1]
+    end
+
+    def mode=(mode)
+      update_stubbing(modes.last, mode)
+
+      modes[-1] = mode
+    end
+
+    def stub(mode, &block)
+      push(mode)
+      ret = yield
+      pop
+      ret
+    end
+
+    def push(mode)
+      update_stubbing(modes.last, mode)
+      modes.push(mode)
+    end
+
+    def pop
+      ret = modes.pop
+      update_stubbing(ret, modes.last)
+      ret
+    end
+
+    def update_stubbing(prev, mode)
+      if prev != mode
         case mode
         when :enable
           enable_stubbing
@@ -15,8 +48,6 @@ module SphyGmo
           raise "stub mode must be :enable or :disable"
         end
       end
-
-      @stub = mode
     end
 
     def enable_stubbing
@@ -33,6 +64,7 @@ module SphyGmo
     end
 
     def disable_stubbing
+      WebMock.reset!
       WebMock.disable!
     end
 

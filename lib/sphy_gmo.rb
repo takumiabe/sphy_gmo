@@ -11,8 +11,6 @@ module SphyGmo
     attr_accessor :configuration
   end
 
-  self.stub = :disable
-
   def self.configure
     self.configuration ||= Configuration.new
     yield(configuration)
