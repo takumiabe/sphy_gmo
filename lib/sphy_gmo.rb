@@ -2,6 +2,7 @@ require 'gmo'
 require 'sphy_gmo/api_error'
 require 'sphy_gmo/card'
 require 'sphy_gmo/member'
+require 'sphy_gmo/stub'
 require 'sphy_gmo/transaction'
 require "sphy_gmo/version"
 
@@ -9,6 +10,8 @@ module SphyGmo
   class << self
     attr_accessor :configuration
   end
+
+  self.stub = :disable
 
   def self.configure
     self.configuration ||= Configuration.new
