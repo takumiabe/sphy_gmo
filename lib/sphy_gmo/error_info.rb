@@ -6,7 +6,7 @@ module SphyGmo
       attr_accessor :all
 
       def parse(v)
-        v = v.send(:error_info) if v.respond_to?(:erro_info)
+        v = v.send(:error_info) if v.respond_to?(:error_info)
         infos = case v
                 when Hash
                   v['ErrInfo'].split('|')
@@ -14,6 +14,8 @@ module SphyGmo
                   [v]
                 when Array
                   v
+                else
+                  raise ArgumentError.new("#{self} cannot parse #{v.inspect}")
                 end
         infos.map{|code| self[code]}
       end
