@@ -16,6 +16,14 @@ module SphyGmo
       @errors.map(&:message)
     end
 
+    def raw_errinfo
+      @errors.map(&:info).join('|')
+    end
+
+    def raw_errcode
+      @errors.map(&:code).join('|')
+    end
+
     def inspect
       "#<#{self.class.name}:#{self.object_id} #{@errors.inspect}>"
     end
