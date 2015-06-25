@@ -16,7 +16,22 @@ module SphyGmo
   end
 
   class Configuration
-    attr_accessor :host, :site_id, :site_pass, :shop_id, :shop_pass
+    CONFIGS = [:host, :site_id, :site_pass, :shop_id, :shop_pass]
+    attr_accessor *CONFIGS
+
+    def [](key)
+      raise "#{key} must be valid entry: #{CONFIGS.inspect}" unless CONFIGS.include? key.to_sym
+      send(key)
+    end
+
+    def []=(key,value)
+      raise "#{key} must be valid entry: #{CONFIGS.inspect}" unless CONFIGS.include? key.to_sym
+      send("#{key}=", value)
+    end
+
+    def to_h
+      Hash[ CONFIGS.map {|attr| [attr, self.send(attr)]} ]
+    end
   end
 
   def self.gmo_site
