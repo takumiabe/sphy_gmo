@@ -32,7 +32,7 @@ gem 'sphy_gmo', github: 'takumiabe/sphy_gmo', branch: 'master'
 SphyGmo.configure do |config|
   config.host = 'gmo-server-domain-name.com'
   config.site_id = 'tsite00000000'
-  config.site_pass = 'abcd1234
+  config.site_pass = 'abcd1234'
   config.shop_id = 'tshop00000000'
   config.shop_pass = 'abcd1234'
 end
