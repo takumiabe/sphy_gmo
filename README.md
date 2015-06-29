@@ -107,11 +107,11 @@ end
 
 例外から、直接エラーメッセージを取得できるようにしてあります。
 
-`SphyGmo::APIError`
-`#errors` `Struct(code, info, message)`の配列を返します。
-`#messages` PDFにあるエラーメッセージを日本語で返してくれます。
-`#raw_errcode` エラーコードを取得(|区切り)
-`#raw_errinfo` エラーメッセージコードを取得(|区切り)
+### `SphyGmo::APIError`
+* `#errors` `Struct(code, info, message)`の配列を返します。
+* `#messages` PDFにあるエラーメッセージを日本語で返してくれます。
+* `#raw_errcode` エラーコードを取得(|区切り)
+* `#raw_errinfo` エラーメッセージコードを取得(|区切り)
 
 
 ## Development
