@@ -66,6 +66,53 @@ API名からメソッドへのマップは基本的に以下のルール
 SphyGmo::Member.search!(member_id: ... )
 ```
 
+## Stubbing ( work in progress..)
+
+実サーバーへのクエリをStub化できます。
+スタブパターンの登録が不十分なため、現状はあまり意味がありません。
+(WebMockの例外が発生する)
+
+直接有効化
+```ruby
+SphyGmo::Stub.mode = :enable
+# すタブ有効(サーバーにクエリが飛ばない)
+SphyGmo::Stub.mode = :disable
+```
+
+状態のプッシュ・ポップ
+```ruby
+SphyGmo::Stub.mode = :disable
+# 実クエリが飛ぶ
+SphyGmo::Stub.push :enable
+# 実クエリが飛ばない
+SphyGmo::Stub.pop
+# 元に戻る(実クエリが飛ぶ)
+```
+
+ブロックでのガード
+```ruby
+# クエリが飛ぶ
+SphyGmo::Stub.stub :disable do
+# サーバーにクエリが飛ばない
+end
+# 飛ぶ
+```
+
+現状スタブ化されるメソッド
+* SphyGmo::Member.search! (空レスポンス)
+* SphyGmo::Card.save! (空レスポンス)
+* SphyGmo::Transaction.entry! (`SphyGmo::Stub.stub_entry_tran(success: ..)`で結果指定
+
+## Error
+
+例外から、直接エラーメッセージを取得できるようにしてあります。
+
+`SphyGmo::APIError`
+`#errors` `Struct(code, info, message)`の配列を返します。
+`#messages` PDFにあるエラーメッセージを日本語で返してくれます。
+`#raw_errcode` エラーコードを取得(|区切り)
+`#raw_errinfo` エラーメッセージコードを取得(|区切り)
+
 
 ## Development
 
