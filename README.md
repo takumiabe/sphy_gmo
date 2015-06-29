@@ -1,28 +1,71 @@
 # SphyGmo
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/sphy_gmo`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+gem 'gmo' (t-k/gmo-payment-ruby) をいい感じにwrapしたいなという観点のgemになります。
+現状最低限自分で使っている機能しかwrapしていないので現状微妙です。
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Gemfileに以下の行を追加して、
 
 ```ruby
-gem 'sphy_gmo'
+gem 'sphy_gmo', github: 'takumiabe/sphy_gmo', branch: 'master'
 ```
 
-And then execute:
+以下を実行する。
 
     $ bundle
 
-Or install it yourself as:
+または、手動でインストールする(specific_installを使う)
 
-    $ gem install sphy_gmo
+    $ gem install specific_install
+    $ gem specific_install -l https://github.com/takumiabe/sphy_gmo.git
 
 ## Usage
 
-TODO: Write usage instructions here
+### Configure
+
+まず設定。GMOの契約情報を元に管理画面にアクセスし、APIキーを取得してくること。
+
+アクセスキーを直にコードに書く場合は:
+
+```ruby
+SphyGmo.configure do |config|
+  config.host = 'gmo-server-domain-name.com'
+  config.site_id = 'tsite00000000'
+  config.site_pass = 'abcd1234
+  config.shop_id = 'tshop00000000'
+  config.shop_pass = 'abcd1234'
+end
+```
+
+認証情報を直接コミットしたくない場合は、環境変数に噛ませる等する:
+
+```ruby
+SphyGmo.configure do |config|
+  config.host = ENV['GMO_HOST']
+  config.site_id = ENV['GMO_SITE_ID']
+  config.site_pass = ENV['GMO_SITE_PASS']
+  config.shop_id = ENV['GMO_SHOP_ID']
+  config.shop_pass = ENV['GMO_SHOP_PASS]
+end
+```
+
+### Query
+
+使用方法の理解にはGMOの仕様PDFを通読することは必須。
+See `030_プロトコルタイプ（カード決済_インタフェース仕様）_*.*.pdf`
+
+API名からメソッドへのマップは基本的に以下のルール
+
+  /payment/SearchMember/ to SphyGmo::Member.search!
+  /payment/EntryTran/ to SphyGmo::Transaction.entry!
+  ...
+
+引数はスネークケースで、ハッシュで渡すこと。
+```ruby
+SphyGmo::Member.search!(member_id: ... )
+```
+
 
 ## Development
 
@@ -32,7 +75,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/sphy_gmo/fork )
+1. Fork it ( https://github.com/takumiabe/sphy_gmo/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
