@@ -21,7 +21,7 @@ module SphyGmo
       end
 
       def [](code)
-        all[code]
+        all.fetch(code)
       end
 
       def all
