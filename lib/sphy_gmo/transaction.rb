@@ -11,7 +11,7 @@ module SphyGmo
         order_id: ,
         member_id: , seq_mode: 0, card_seq: 0,
         access_id: ,  access_pass: ,
-        method: PAYMENT_METHOD, pay_times: nil
+        method: 1, pay_times: nil
         )
       SphyGmo.gmo_site.exec_tran(
         order_id: order_id,
