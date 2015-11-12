@@ -80,5 +80,16 @@ module SphyGmo::Stub
       end
       WebMock.stub_request(:post, target_url).to_return(status: 200, body: body)
     end
+
+    def stub_exec_tran(success: )
+      target_url = "https://#{SphyGmo.configuration.host}/payment/ExecTran.idPass"
+      if success
+        body = Rack::Utils.build_nested_query({})
+      else
+        err = SphyGmo::ErrorInfo.all.values.sample
+        body = Rack::Utils.build_nested_query(ErrCode: err.code ,ErrInfo: err.info)
+      end
+      WebMock.stub_request(:post, target_url).to_return(status: 200, body: body)
+    end
   end
 end
