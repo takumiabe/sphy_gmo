@@ -6,12 +6,10 @@ module SphyGmo
       raise SphyGmo::APIError.new(e)
     end
 
-    def self.save!(member_id: ,card_no: ,holder_name: ,expire: ,card_seq: nil ,default_flag: ,seq_mode: )
+    def self.save!(member_id: ,token: ,card_seq: nil ,default_flag: ,seq_mode: )
       SphyGmo.gmo_site.save_card({
           member_id: member_id,
-          card_no: card_no,
-          holder_name: holder_name,
-          expire: expire,
+          token: token,
           card_seq: card_seq,
           default_flag: default_flag,
           seq_mode: seq_mode
